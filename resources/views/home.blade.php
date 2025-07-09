@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Meta Deskripsi -->  
+<meta name="description" content="Expasign & Edutime dari Mars Project PNJ adalah program unggulan untuk meningkatkan kreativitas, inovasi, dan pengembangan diri mahasiswa melalui lomba dan seminar.">  
+
+<!-- Meta Keywords -->  
+<meta name="keywords" content="Expasign, Edutime, Mars Project, PNJ, Politeknik Negeri Jakarta, LKTI, Esai, Poster, Seminar, Mahasiswa, Pendidikan, Inovasi, Lomba, Infografis Kreativitas">  
+
+<!-- Meta Author -->  
+<meta name="author" content="Mars Project PNJ">  
     @vite('resources/css/app.css')
-    <title>{{ config('app.name', 'Expasign 2025') }}</title>
+    <title>Expasign x Edutime 2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-900 text-white" style="font-family: 'Orbitron', monospace; font-weight: 400;">    
     <nav class="relative z-50 px-6 py-4 bg-gray-900 shadow-lg">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <h1 class="text-xl font-bold text-white">Expasign</h1>
+        <h1 class="text-xl font-bold text-white">Expasign x Edutime</h1>
 
         <button id="burger" class="md:hidden text-white focus:outline-none">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,15 +52,16 @@
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(30, 58, 138, 0.20) 0%, rgba(0, 0, 0, 0.50) 100%);"></div>
         <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-            <h1 class="text-6xl md:text-8xl font-white mb-8 ">
-                Expasign <span class="text-blue-400">2025</span>
+            <h1 class="text-3xl flex flex-col md:text-6xl font-white mb-5 ">
+                Expasign<span>x</span><span>Edutime</span> <span class="text-blue-400">2025</span>
             </h1>
             
-            <p class="text-lg md:text-xl text-gray-300 mb-12 leading-relaxed max-w-2xl mx-auto">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.
+            <p class="text-xs md:text-xl text-gray-300 mb-5 leading-relaxed max-w-2xl mx-auto">
+                Expasign dan Edutime adalah program unggulan dari Mars Project PNJ yang bertujuan meningkatkan kreativitas, inovasi, dan potensi mahasiswa. Expasign melibatkan lomba seperti LKTI, Esai, dan Desain Poster, sementara Edutime adalah seminar untuk pengembangan keterampilan di bidang pendidikan dan bisnis.
+Tahun ini, kedua program ini digabungkan untuk mengoptimalkan visi UKM Mars Project, menggabungkan aspek teoritis dan praktis, serta memberikan dampak yang lebih luas dalam pengembangan diri, kreativitas, dan kolaborasi antar mahasiswa.
             </p>
             
-            <button class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button class="bg-gradient-to-r mb-5 from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 Register Now
             </button>
         </div>
@@ -111,7 +120,7 @@
     <footer class="bg-gray-900 py-12 px-6">
         <div class="max-w-7xl mx-auto text-center">
             <div class="mb-8">
-                <h3 class="text-3xl font-bold text-white mb-4">Expasign 2025</h3>
+                <h3 class="text-3xl font-bold text-white mb-4">Expasign x Edutime 2025</h3>
                 <p class="text-gray-400 max-w-2xl mx-auto">
                     Join us in the ultimate competition experience. Register now and be part of something extraordinary.
                 </p>
@@ -119,9 +128,7 @@
             
             <div class="flex justify-center space-x-6 mb-8">
                 <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                    </svg>
+                    <svg class="w-6 h-6" fill="currentColor" width="800px" height="80<0px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/><path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/></svg>
                 </a>
                 <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -137,7 +144,7 @@
             
             <div class="border-t border-gray-700 pt-8">
                 <p class="text-gray-400">
-                    © {{ date('Y') }} Expasign 2025. All rights reserved.
+                    © {{ date('Y') }} Expasign x Edutime. All rights reserved.
                 </p>
             </div>
         </div>
