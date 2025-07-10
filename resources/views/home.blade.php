@@ -7,12 +7,13 @@
 <meta name="description" content="Expasign & Edutime dari Mars Project PNJ adalah program unggulan untuk meningkatkan kreativitas, inovasi, dan pengembangan diri mahasiswa melalui lomba dan seminar.">  
 
 <!-- Meta Keywords -->  
-<meta name="keywords" content="Expasign, Edutime, Mars Project, PNJ, Politeknik Negeri Jakarta, LKTI, Esai, Poster, Seminar, Mahasiswa, Pendidikan, Inovasi, Lomba, Infografis Kreativitas">  
+<meta name="keywords" content="Expasign, Edutime, Mars Project, PNJ, Politeknik Negeri Jakarta, Expasign pnj, LKTI, Esai, Poster, Seminar, Mahasiswa, Pendidikan, Inovasi, Lomba, Infografis Kreativitas">  
 
 <!-- Meta Author -->  
 <meta name="author" content="Mars Project PNJ">  
     @vite('resources/css/app.css')
     <title>Expasign x Edutime 2025</title>
+<link rel="icon" href="{{ asset('logo.jpg') }}" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-900 text-white" style="font-family: 'Orbitron', monospace; font-weight: 400;">    
