@@ -6,6 +6,8 @@ use App\Filament\Resources\RegistrantResource\Pages;
 use App\Filament\Resources\RegistrantResource\RelationManagers;
 use App\Models\Registrant;
 use Filament\Forms;
+use Closure;
+use Illuminate\Support\Facades\Http;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\ImageColumn;
@@ -31,17 +33,17 @@ class RegistrantResource extends Resource
                 [
                 //
                 Forms\Components\TextInput::make('name')
-                    ->required()
+                    
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
-                    ->required()
+                    
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
-                    ->required()
+                    
                     ->maxLength(20),
                 Forms\Components\TextInput::make('school')
-                    ->required()
+                    
                     ->maxLength(255),
                 Forms\Components\Select::make('category')
                     ->options(
@@ -51,19 +53,13 @@ class RegistrantResource extends Resource
                         'category3' => 'Category 3',
                         ]
                     )
-                    ->required(),
+                    ,
                 Forms\Components\TextInput::make('nominal')
                     ->numeric()
-                    ->required()
+                    
                     ->maxLength(10),
-                Forms\Components\FileUpload::make('receipt')
-                    ->disk('s3')
-                    ->directory('receipts')
-                    ->required()
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
-                    ->maxSize(2048),
                 Forms\Components\Toggle::make('isEdu')
-                    ->label('Is Educational')
+                    ->label('Is Edutime')
                     ->default(false),
                 Forms\Components\Select::make('status')
                     ->options(
@@ -74,7 +70,7 @@ class RegistrantResource extends Resource
                         ]
                     )
                     ->default('pending')
-                    ->required(),
+                    ,
                 ]
             );
     }
@@ -108,16 +104,12 @@ class RegistrantResource extends Resource
                     ->height(250)
                     ->width(250),
                 Tables\Columns\BooleanColumn::make('isEdu')
-                    ->label('Is Educational')
+                    ->label('Edutime')
                     ->sortable(),
-                Tables\Columns\SelectColumn::make('status')
-                    ->options(
-                        [
-                        'pending' => 'Pending',
-                        'verified' => 'Verified',
-                        'rejected' => 'Rejected',
-                        ]
-                    )]
+                Tables\Columns\TextColumn::make('status')
+                    ->sortable()
+                    ->label('Status')
+                    ->searchable()]
             )
             ->filters(
                 [
