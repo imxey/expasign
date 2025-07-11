@@ -25,3 +25,7 @@ Thumbs.db
 docker-compose
 docker-compose.yaml
 Dockerfile
+
+**/caddy
+frankenphp
+frankenphp-worker.php
