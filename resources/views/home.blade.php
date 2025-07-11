@@ -1,50 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Expasign & Edutime dari Mars Project PNJ adalah program unggulan untuk meningkatkan kreativitas, inovasi, dan pengembangan diri mahasiswa melalui lomba dan seminar.">  
-<meta name="keywords" content="Expasign, Edutime, Mars Project, PNJ, Politeknik Negeri Jakarta, Expasign pnj, LKTI, Esai, Poster, Seminar, Mahasiswa, Pendidikan, Inovasi, Lomba, Infografis Kreativitas">  
-<meta name="author" content="Mars Project PNJ">  
-    @vite('resources/css/app.css')
-    <title>Expasign x Edutime 2025</title>
-<link rel="icon" href="{{ asset('logo.jpg') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-</head>
+@extends('layouts.app')
+@section('content')
 <body class="bg-gray-900 text-white" style="font-family: 'Orbitron', monospace; font-weight: 400;">    
-    <nav class="relative z-50 px-6 py-4 bg-gray-900 shadow-lg">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <h1 class="text-xl font-bold text-white">Expasign x Edutime</h1>
-
-        <button id="burger" class="md:hidden text-white focus:outline-none">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-        </button>
-
-        <div class="hidden md:flex space-x-8 items-center">
-        <a href="#about" class="text-gray-300 hover:text-white transition-colors duration-300">About</a>
-        <a href="#competitions" class="text-gray-300 hover:text-white transition-colors duration-300">Competitions</a>
-        <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
-        <button style="background: linear-gradient(90deg, #06B6D4 0%, #3B82F6 100%);" class="hover:cursor-pointer text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
-            Register
-        </button>
-        </div>
-    </div>
-
-    <div id="nav-links" class="hidden flex flex-col md:hidden mt-4 space-y-4 px-6">
-        <a href="#about" class="block text-gray-300 hover:text-white transition-colors duration-300">About</a>
-        <a href="#competitions" class="block text-gray-300 hover:text-white transition-colors duration-300">Competitions</a>
-        <a href="#contact" class="block text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
-        <button class="w-full bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
-        Register
-        </button>
-    </div>
-    </nav>
-
-
-
+    <x-navbar></x-navbar>
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(30, 58, 138, 0.20) 0%, rgba(0, 0, 0, 0.50) 100%);"></div>
         <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
@@ -54,7 +11,7 @@
             
             <p class="text-xs md:text-xl text-gray-300 mb-5 leading-relaxed max-w-5xl mx-auto">
                 Expasign dan Edutime adalah program unggulan dari Mars Project PNJ yang bertujuan meningkatkan kreativitas, inovasi, dan potensi mahasiswa. Expasign melibatkan lomba seperti LKTI, Esai, dan Desain Poster, sementara Edutime adalah seminar untuk pengembangan keterampilan di bidang pendidikan dan bisnis.
-Tahun ini, kedua program ini digabungkan untuk mengoptimalkan visi UKM Mars Project, menggabungkan aspek teoritis dan praktis, serta memberikan dampak yang lebih luas dalam pengembangan diri, kreativitas, dan kolaborasi antar mahasiswa.
+                Tahun ini, kedua program ini digabungkan untuk mengoptimalkan visi UKM Mars Project, menggabungkan aspek teoritis dan praktis, serta memberikan dampak yang lebih luas dalam pengembangan diri, kreativitas, dan kolaborasi antar mahasiswa.
             </p>
             
             <button class="bg-gradient-to-r mb-5 from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
@@ -177,4 +134,4 @@ Tahun ini, kedua program ini digabungkan untuk mengoptimalkan visi UKM Mars Proj
 </script>
 
 </body>
-</html>
+@endsection

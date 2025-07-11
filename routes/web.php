@@ -1,9 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\File; 
+
+Route::get('/upload', [File::class, 'showUploadForm'])->name('show.form');
+Route::post('/upload', [File::class, 'handleUpload'])->name('file.upload');
 
 Route::get('/', function () {
     return view('home');
+});
+Route::get('/tes', function () {
+    return view('tes');
 });
 Route::get('/sitemap.xml', function () {
     $urls = [
