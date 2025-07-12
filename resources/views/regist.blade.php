@@ -61,13 +61,7 @@
                 </select>
             </div>
 
-            <div>
-                <label for="receipt" class="block text-gray-300 text-sm font-bold mb-2">Upload Bukti Pembayaran</label>
-                <input type="file" name="receipt" id="receipt" required class="form-input w-full bg-gray-700 text-sm border border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white p-2 rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600">
-                <p class="text-gray-400 text-xs mt-1">Ukuran maksimal file: 2MB. Format: JPG, PNG, PDF.</p>
-            </div>
-
-            <div class="mb-6">
+            <div class="">
                 <p class="block text-gray-300 text-sm font-bold mb-3">METODE PEMBAYARAN</p>
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex items-center gap-2">
@@ -83,6 +77,13 @@
                 </div>
             </div>
 
+            <div class="hidden" id="paymentDetails">
+                <label for="receipt" class="block text-gray-300 text-sm font-bold mb-2">Upload Bukti Pembayaran</label>
+                <input type="file" name="receipt" id="receipt" required class="form-input w-full bg-gray-700 text-sm border border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white p-2 rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600">
+                <p class="text-gray-400 text-xs mt-1">Ukuran maksimal file: 2MB. Format: JPG, PNG, PDF.</p>
+            </div>
+
+
             <div class="flex gap-2 text-sm">
                 <input type="checkbox" name="isEdu" id="isEdu" value="1" {{ old('isEdu') ? 'checked' : '' }} class="form-checkbox h-5 w-5 p-2 text-blue-500 rounded focus:ring-blue-500">
                 <label for="isEdu" class="text-gray-300 text-sm font-bold">Bersedia hadir pada edutime tanggal 32 Agustus 2069?</label>
@@ -94,5 +95,34 @@
             </button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentMethodRadios = document.querySelectorAll('input[name="payment_method"]');
+            const paymentDetailsDiv = document.getElementById('paymentDetails');
+            const receiptInput = document.getElementById('receipt');
+
+            function togglePaymentDetails() {
+                // Cek apakah radio button 'transfer' yang terpilih
+                if (document.getElementById('transfer').checked) {
+                    paymentDetailsDiv.classList.remove('hidden');
+                    receiptInput.setAttribute('required', 'required'); // Wajibkan field 'receipt'
+                } else {
+                    paymentDetailsDiv.classList.add('hidden');
+                    receiptInput.removeAttribute('required'); // Hilangkan kewajiban field 'receipt'
+                    receiptInput.value = ''; // Opsional: Bersihkan nilai input file jika disembunyikan
+                }
+            }
+
+            // Tambahkan event listener ke setiap radio button
+            paymentMethodRadios.forEach(radio => {
+                radio.addEventListener('change', togglePaymentDetails);
+            });
+
+            // Panggil fungsi saat halaman pertama kali dimuat
+            // Ini penting untuk menangani kasus old('payment_method') yang mungkin sudah terpilih
+            togglePaymentDetails();
+        });
+    </script>
 </body>
 @endsection
