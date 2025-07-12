@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('registrant_id'); 
             $table->string('file'); 
             $table->timestamps();
-            $table->foreign('registrant_id')->references('uuid')->on('registrants')->onDelete('cascade');
+            $table->foreign('registrant_id')->references('id')->on('registrants')->onDelete('cascade');
             });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('submission');
     }
 };

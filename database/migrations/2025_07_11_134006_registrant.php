@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('nominal');
             $table->string('receipt');
             $table->boolean('isEdu');
+            $table->integer('code')->nullable();
             $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
             $table->timestamps();
         });
