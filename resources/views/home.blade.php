@@ -13,10 +13,11 @@
                 Expasign dan Edutime adalah program unggulan dari Mars Project PNJ yang bertujuan meningkatkan kreativitas, inovasi, dan potensi mahasiswa. Expasign melibatkan lomba seperti LKTI, Esai, dan Desain Poster, sementara Edutime adalah seminar untuk pengembangan keterampilan di bidang pendidikan dan bisnis.
                 Tahun ini, kedua program ini digabungkan untuk mengoptimalkan visi UKM Mars Project, menggabungkan aspek teoritis dan praktis, serta memberikan dampak yang lebih luas dalam pengembangan diri, kreativitas, dan kolaborasi antar mahasiswa.
             </p>
-            
-            <button class="bg-gradient-to-r mb-5 from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                Register Now
-            </button>
+            <a href="/register">
+                <button class="bg-gradient-to-r mb-5 from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    Register Now
+                </button>
+            </a>
         </div>
 
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">

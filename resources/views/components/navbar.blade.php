@@ -13,9 +13,11 @@
         <a href="#about" class="text-gray-300 hover:text-white transition-colors duration-300">About</a>
         <a href="#competitions" class="text-gray-300 hover:text-white transition-colors duration-300">Competitions</a>
         <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+        <a href="/register">
         <button style="background: linear-gradient(90deg, #06B6D4 0%, #3B82F6 100%);" class="hover:cursor-pointer text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
             Register
         </button>
+        </a>
         </div>
     </div>
 
@@ -23,8 +25,10 @@
         <a href="#about" class="block text-gray-300 hover:text-white transition-colors duration-300">About</a>
         <a href="#competitions" class="block text-gray-300 hover:text-white transition-colors duration-300">Competitions</a>
         <a href="#contact" class="block text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+        <a href="/register">
         <button class="w-full bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
         Register
         </button>
+        </a>
     </div>
     </nav>
