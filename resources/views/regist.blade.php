@@ -41,7 +41,15 @@
             <option value="category2" {{ old('category') === 'category2' ? 'selected' : '' }}>Option 2</option>
             <option value="category3" {{ old('category') === 'category3' ? 'selected' : '' }}>Option 3</option>
         </select>
-
+        <p>PAYMENT METHOD</p>
+        <div class="flex flex-col">
+            <label for="auto" class="mb-1">Auto</label>
+            <input type="checkbox" name="auto" value="1" {{ old('auto') ? 'checked' : '' }} class="w-5 h-5">
+        </div>
+        <div class="flex flex-col">
+            <label for="transfer" class="mb-1">Transfer</label>
+            <input type="checkbox" name="transfer" value="1" {{ old('transfer') ? 'checked' : '' }} class="w-5 h-5">
+        </div>
         <div class="flex flex-col">
             <label for="isEdu" class="mb-1">Apakah kamu bersedia hadir pada edutime tanggal 32 Agustus 2069?</label>
             <input type="hidden" name="isEdu" value="0">

@@ -12,6 +12,7 @@ Route::get('/', function () {
 });
 Route::get('/register', [Regist::class, 'index'])->name('regist');
 Route::post('/register', [Regist::class, 'handleRegist'])->name('regist.handle');
+
 Route::get('/sitemap.xml', function () {
     $urls = [
         secure_url('/'),
