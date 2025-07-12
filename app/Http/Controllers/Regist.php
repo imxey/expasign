@@ -18,111 +18,73 @@ class Regist extends Controller
     }
     public function handleRegist(Request $request)
 {
-    if($request['auto'] == 1 ) {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:registrants',
-            'phone' => 'required|numeric',
-            'nim' => 'required|numeric',
-            'school' => 'required|string|max:255',
-            'category' => 'required|string|in:category1,category2,category3',
-            'isEdu' => 'required|boolean',
-            'receipt' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:registrants',
+        'phone' => 'required|numeric',
+        'nim' => 'required|numeric',
+        'school' => 'required|string|max:255',
+        'category' => 'required|in:category1,category2,category3',
+        'payment_method' => 'required|in:auto,transfer',
+        'isEdu' => 'required|boolean',
+        'receipt' => 'required_if:payment_method,transfer|file|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
+    $url = null;
+
+    if ($request->payment_method === 'transfer') {
         $file = $request->file('receipt');
         $fileName = 'images/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
 
         try {
             Storage::disk('s3')->put($fileName, file_get_contents($file));
             $url = Storage::disk('s3')->url($fileName);
-            echo('File berhasil di-upload');
         } catch (\Exception $e) {
-            echo('Failed to upload file: ' . $e->getMessage());
+            return back()->withErrors(['receipt' => 'Upload gagal: ' . $e->getMessage()]);
         }
+    }
 
-        if (request('category') === 'category1') {
-            $validatedData['nominal'] = 1000;
-        } elseif (request('category') === 'category2') {
-            $validatedData['nominal'] = 2000;
-        } elseif (request('category') === 'category3') {
-            $validatedData['nominal'] = 3000;
-        }
+    $baseNominal = match ($validatedData['category']) {
+        'category1' => 1000,
+        'category2' => 2000,
+        'category3' => 3000,
+    };
 
+    if ($validatedData['payment_method'] === 'auto') {
         do {
             $kodeUnik = rand(100, 999);
-            $nominalFinal = $validatedData['nominal'] + $kodeUnik;
+            $nominalFinal = $baseNominal + $kodeUnik;
             $sudahAda = Registrant::where('nominal', $nominalFinal)->exists();
         } while ($sudahAda);
 
         $validatedData['nominal'] = $nominalFinal;
-
-
-        $registrant = Registrant::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'phone' => $validatedData['phone'],
-            'nim' => $validatedData['nim'],
-            'school' => $validatedData['school'],
-            'code' => $kodeUnik,
-            'category' => $validatedData['category'],
-            'nominal' => $validatedData['nominal'],
-            'receipt' => $url,
-            'isEdu' => $validatedData['isEdu'],
-        ]);
-
-        $id = $registrant->id;
-
-        return view('saweria', [
-            'id' => $id,
-            'name'=> $validatedData['name'],
-            'nominal' => $validatedData['nominal'],
-        ]);
+        $validatedData['code'] = $kodeUnik;
+    } else {
+        $validatedData['nominal'] = $baseNominal;
+        $validatedData['code'] = null;
     }
-    else if($request['transfer'] == 1 ) {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:registrants',
-            'phone' => 'required|numeric',
-            'nim' => 'required|numeric',
-            'school' => 'required|string|max:255',
-            'category' => 'required|string|in:category1,category2,category3',
-            'isEdu' => 'required|boolean',
-            'receipt' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+
+    $registrant = Registrant::create([
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'phone' => $validatedData['phone'],
+        'nim' => $validatedData['nim'],
+        'school' => $validatedData['school'],
+        'category' => $validatedData['category'],
+        'nominal' => $validatedData['nominal'],
+        'code' => $validatedData['code'],
+        'receipt' => $url,
+        'isEdu' => $validatedData['isEdu'],
+    ]);
+
+    if ($validatedData['payment_method'] === 'auto') {
+        return view('saweria', [
+            'id' => $registrant->id,
+            'name' => $registrant->name,
+            'nominal' => $registrant->nominal,
         ]);
-
-        $file = $request->file('receipt');
-        $fileName = 'images/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
-
-        try {
-            Storage::disk('s3')->put($fileName, file_get_contents($file));
-            $url = Storage::disk('s3')->url($fileName);
-            echo('File berhasil di-upload');
-        } catch (\Exception $e) {
-            echo('Failed to upload file: ' . $e->getMessage());
-        }
-
-        if (request('category') === 'category1') {
-            $validatedData['nominal'] = 1000;
-        } elseif (request('category') === 'category2') {
-            $validatedData['nominal'] = 2000;
-        } elseif (request('category') === 'category3') {
-            $validatedData['nominal'] = 3000;
-        }
-
-        $registrant = Registrant::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'phone' => $validatedData['phone'],
-            'nim' => $validatedData['nim'],
-            'school' => $validatedData['school'],
-            'category' => $validatedData['category'],
-            'nominal' => $validatedData['nominal'],
-            'receipt' => $url,
-            'isEdu' => $validatedData['isEdu'],
-        ]);
-
-        $response = Http::withHeaders([
+    } else {
+        Http::withHeaders([
             'Authorization' => env('FONNTE_TOKEN'),
         ])->post('https://api.fonnte.com/send', [
             'target' => env('FONNTE_NUMBER'),
@@ -130,9 +92,10 @@ class Regist extends Controller
             'countryCode' => '62',
         ]);
 
-        return redirect()->back()->with('success', 'Regist successfully!');
+        return redirect()->back()->with('success', 'Pendaftaran berhasil!');
     }
-    }
+}
+
 
     public function handleCallback(Request $request)
     {
