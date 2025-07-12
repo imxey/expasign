@@ -33,6 +33,7 @@ class Registrant extends Model
         'nominal',
         'receipt',
         'isEdu',
+        'code',
         'status',
     ];
 }

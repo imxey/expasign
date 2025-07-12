@@ -42,11 +42,11 @@ class Regist extends Controller
         }
 
         if (request('category') === 'category1') {
-            $validatedData['nominal'] = 100000;
+            $validatedData['nominal'] = 1000;
         } elseif (request('category') === 'category2') {
-            $validatedData['nominal'] = 200000;
-        } else {
-            $validatedData['nominal'] = 300000;
+            $validatedData['nominal'] = 2000;
+        } elseif (request('category') === 'category3') {
+            $validatedData['nominal'] = 3000;
         }
 
         do {
@@ -57,12 +57,14 @@ class Regist extends Controller
 
         $validatedData['nominal'] = $nominalFinal;
 
+
         $registrant = Registrant::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'phone' => $validatedData['phone'],
             'nim' => $validatedData['nim'],
             'school' => $validatedData['school'],
+            'code' => $kodeUnik,
             'category' => $validatedData['category'],
             'nominal' => $validatedData['nominal'],
             'receipt' => $url,
@@ -101,11 +103,11 @@ class Regist extends Controller
         }
 
         if (request('category') === 'category1') {
-            $validatedData['nominal'] = 100000;
+            $validatedData['nominal'] = 1000;
         } elseif (request('category') === 'category2') {
-            $validatedData['nominal'] = 200000;
-        } else {
-            $validatedData['nominal'] = 300000;
+            $validatedData['nominal'] = 2000;
+        } elseif (request('category') === 'category3') {
+            $validatedData['nominal'] = 3000;
         }
 
         $registrant = Registrant::create([
@@ -135,21 +137,27 @@ class Regist extends Controller
     public function handleCallback(Request $request)
     {
         $nominal = (int) $request->input('etc.amount_to_display');
-        if($nominal === 30000){
-            $category = 'category3';
-        } elseif($nominal === 20000) {
-            $category = 'category2';
-        } else {
-            $category = 'category1';
-        }
+        $category = '';
         $db = Registrant::where('nominal', $nominal)->first();
+        $code = $db->code ?? null;
+        if($nominal - $code  === 3000){
+            $category = 'category3';
+        } elseif($nominal - $code === 2000) {
+            $category = 'category2';
+        } elseif ($nominal - $code === 1000) {
+            $category = 'category1';
+        }else {
+            return response()->json(['message' => 'Nominal tidak valid'], 400);
+        }
 
         if (!$db) {
             return response()->json(['message' => 'Data tidak ditemukan'], 404);
         }
 
-        if ($db->nominal === $nominal && $db->status !== 'Verified' && $db->category === $category) {
+        if ($db->nominal  === $nominal && $db->status !== 'Verified' && $db->category === $category) {
             $db->update(['status' => 'Verified']);
+        }else{
+            return response()->json(['message' => 'Data tidak sesuai', 'dbNominal' => $db->nominal, 'dbCode' => $db->code, 'nominalReceived' => $nominal, 'category' => $category, 'dbCategory' => $db->category], 400);
         }
 
         $response = Http::withHeaders([
