@@ -147,7 +147,7 @@ class Regist extends Controller
         } elseif ($nominal - $code === 1000) {
             $category = 'category1';
         }else {
-            return response()->json(['message' => 'Nominal tidak valid'], 400);
+            return response()->json(['message' => 'Nominal tidak valid', 'dbNominal' => $db->nominal, 'dbCode' => $db->code, 'nominalReceived' => $nominal, 'category' => $category, 'dbCategory' => $db->category], 400);
         }
 
         if (!$db) {
@@ -157,7 +157,7 @@ class Regist extends Controller
         if ($db->nominal  === $nominal && $db->status !== 'Verified' && $db->category === $category) {
             $db->update(['status' => 'Verified']);
         }else{
-            return response()->json(['message' => 'Data tidak sesuai', 'dbNominal' => $db->nominal, 'dbCode' => $db->code, 'nominalReceived' => $nominal, 'category' => $category, 'dbCategory' => $db->category], 400);
+            return response()->json(['message' => 'Data tidak sesuai', 'dbNominal' => $db->nominal, 'dbCode' => $db->code, 'nominalReceived' => $nominal, 'category' => $category, 'dbCategory' => $db->category, ], 400);
         }
 
         $response = Http::withHeaders([
