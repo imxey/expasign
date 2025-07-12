@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,7 @@ class Registrant extends Model
         'name',
         'email',
         'phone',
+        'nim',
         'school',
         'category',
         'nominal',

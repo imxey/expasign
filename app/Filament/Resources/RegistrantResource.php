@@ -33,18 +33,21 @@ class RegistrantResource extends Resource
                 [
                 //
                 Forms\Components\TextInput::make('name')
-                    
+
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
-                    
+
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
-                    
+
                     ->maxLength(20),
                 Forms\Components\TextInput::make('school')
-                    
+
                     ->maxLength(255),
+                Forms\Components\TextInput::make('nim')
+                    ->numeric()
+                    ->maxLength(20),
                 Forms\Components\Select::make('category')
                     ->options(
                         [
@@ -56,7 +59,7 @@ class RegistrantResource extends Resource
                     ,
                 Forms\Components\TextInput::make('nominal')
                     ->numeric()
-                    
+
                     ->maxLength(10),
                 Forms\Components\Toggle::make('isEdu')
                     ->label('Is Edutime')
@@ -82,6 +85,9 @@ class RegistrantResource extends Resource
                 [
                 //
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('nim')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('email')

@@ -70,7 +70,7 @@ class SubmissionResource extends Resource
                     ->sortable()
                     ->label('File')
                     ->height(250)
-                    ->width(250), 
+                    ->width(250),
                 ]
             )
             ->filters(
