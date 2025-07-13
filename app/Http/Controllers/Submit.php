@@ -19,12 +19,19 @@ class Submit extends Controller
     {
         $validatedData = $request->validate([
             'email' => 'required|string|email|max:255|exists:registrants,email',
-            'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:120000',
         ]);
         $file = $request->file('file');
         $fileName = 'images/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
-        Storage::disk('s3')->put($fileName, file_get_contents($file));
-        $url = Storage::disk('s3')->url($fileName);
+        try {
+            Storage::disk('s3')->put($fileName, file_get_contents($file));
+            $url = Storage::disk('s3')->url($fileName);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'file' => 'Upload gagal: ' . $e->getMessage()
+            ]);
+        }
+
         $id = Registrant::where('email', $validatedData['email'])->first()->id ?? null;
         if(Registrant::where('id', $id)->first()->status === 'verified'){
             Submission::create([

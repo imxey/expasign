@@ -88,7 +88,7 @@ class Regist extends Controller
             'Authorization' => env('FONNTE_TOKEN'),
         ])->post('https://api.fonnte.com/send', [
             'target' => env('FONNTE_NUMBER'),
-            'message' => "*PENDAFTAR BARU*\n\nNama: {$registrant->name}\nPhone: {$registrant->phone}\nEmail: {$registrant->email}\nNIM: {$registrant->nim}\nSekolah/Universitas: {$registrant->school}\nKategori: {$registrant->category}\nNominal: {$registrant->nominal}\n\nSilahkan buka https://expasign-edutime.site/admin dan verifikasi pembayaran",
+            'message' => "*PENDAFTAR EXPASIGN BARU*\n\nNama: {$registrant->name}\nPhone: {$registrant->phone}\nEmail: {$registrant->email}\nNIM: {$registrant->nim}\nSekolah/Universitas: {$registrant->school}\nKategori: {$registrant->category}\nNominal: {$registrant->nominal}\n\nSilahkan buka https://expasign-edutime.site/admin dan verifikasi pembayaran",
             'countryCode' => '62',
         ]);
 
@@ -127,7 +127,7 @@ class Regist extends Controller
             'Authorization' => env('FONNTE_TOKEN'),
         ])->post('https://api.fonnte.com/send', [
             'target' => env('FONNTE_NUMBER'),
-            'message' => "*PENDAFTAR BARU (OTOMATIS)*\n\nNama: {$db->name}\nPhone: {$db->phone}\nEmail: {$db->email}\nNIM: {$db->nim}\nSekolah/Universitas: {$db->school}\nKategori: {$db->category}\nNominal: {$db->nominal}\nstatus: {$db->status}\n",
+            'message' => "*PENDAFTAR EXPASIGN BARU (OTOMATIS)*\n\nNama: {$db->name}\nPhone: {$db->phone}\nEmail: {$db->email}\nNIM: {$db->nim}\nSekolah/Universitas: {$db->school}\nKategori: {$db->category}\nNominal: {$db->nominal}\nstatus: {$db->status}\n",
             'countryCode' => '62',
         ]);
 

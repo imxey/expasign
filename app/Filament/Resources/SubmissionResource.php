@@ -53,11 +53,12 @@ class SubmissionResource extends Resource
                     ->searchable()
                     ->label('Registrant Category')
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('file')
-                    ->sortable()
-                    ->label('File')
-                    ->height(250)
-                    ->width(250),
+                Tables\Columns\TextColumn::make('file')
+                    ->searchable()
+                    ->url(fn ($record) => $record->file)
+                    ->openUrlInNewTab()
+                    ->label('Registrant File')
+                    ->sortable(),
                 ]
             )
             ->filters(

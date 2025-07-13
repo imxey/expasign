@@ -116,11 +116,15 @@ class RegistrantResource extends Resource
                 Tables\Columns\BooleanColumn::make('isEdu')
                     ->label('Edutime')
                     ->sortable(),
+                Tables\Columns\BooleanColumn::make('isExpa')
+                    ->label('Expasign')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->sortable()
                     ->label('Status')
                     ->searchable()]
             )
+            ->defaultSort('created_at', 'desc')
             ->filters(
                 [
                 //
