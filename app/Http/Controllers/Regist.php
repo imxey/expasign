@@ -17,84 +17,87 @@ class Regist extends Controller
         return view('regist');
     }
     public function handleRegist(Request $request)
-{
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:registrants',
-        'phone' => 'required|numeric',
-        'nim' => 'required|numeric',
-        'school' => 'required|string|max:255',
-        'category' => 'required|in:category1,category2,category3',
-        'payment_method' => 'required|in:auto,transfer',
-        'isEdu' => 'required|boolean',
-        'receipt' => 'required_if:payment_method,transfer|file|mimes:jpg,jpeg,png,pdf|max:2048',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:registrants',
+            'phone' => 'required|numeric',
+            'nim' => 'required|numeric',
+            'school' => 'required|string|max:255',
+            'category' => 'required|in:category1,category2,category3',
+            'payment_method' => 'required|in:auto,transfer',
+            'isEdu' => 'nullable|boolean', // cukup ini
+            'receipt' => 'required_if:payment_method,transfer|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
 
-    $url = null;
+        $validatedData['isEdu'] = $request->boolean('isEdu'); // hasilnya selalu true/false (1/0)
 
-    if ($request->payment_method === 'transfer') {
-        $file = $request->file('receipt');
-        $fileName = 'images/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $url = null;
 
-        try {
-            Storage::disk('s3')->put($fileName, file_get_contents($file));
-            $url = Storage::disk('s3')->url($fileName);
-        } catch (\Exception $e) {
-            return back()->withErrors(['receipt' => 'Upload gagal: ' . $e->getMessage()]);
+        if ($request->payment_method === 'transfer') {
+            $file = $request->file('receipt');
+            $fileName = 'images/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
+
+            try {
+                Storage::disk('s3')->put($fileName, file_get_contents($file));
+                $url = Storage::disk('s3')->url($fileName);
+            } catch (\Exception $e) {
+                return back()->withErrors(['receipt' => 'Upload gagal: ' . $e->getMessage()]);
+            }
+        }
+
+        $baseNominal = match ($validatedData['category']) {
+            'category1' => 1000,
+            'category2' => 2000,
+            'category3' => 3000,
+        };
+
+        if ($validatedData['payment_method'] === 'auto') {
+            do {
+                $kodeUnik = rand(100, 999);
+                $nominalFinal = $baseNominal + $kodeUnik;
+                $sudahAda = Registrant::where('nominal', $nominalFinal)->exists();
+            } while ($sudahAda);
+
+            $validatedData['nominal'] = $nominalFinal;
+            $validatedData['code'] = $kodeUnik;
+        } else {
+            $validatedData['nominal'] = $baseNominal;
+            $validatedData['code'] = null;
+        }
+
+        $registrant = Registrant::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'phone' => $validatedData['phone'],
+            'nim' => $validatedData['nim'],
+            'school' => $validatedData['school'],
+            'category' => $validatedData['category'],
+            'nominal' => $validatedData['nominal'],
+            'code' => $validatedData['code'],
+            'receipt' => $url,
+            'isEdu' => $validatedData['isEdu'], // hasilnya udah 1/0
+        ]);
+
+        if ($validatedData['payment_method'] === 'auto') {
+            return view('saweria', [
+                'id' => $registrant->id,
+                'name' => $registrant->name,
+                'nominal' => $registrant->nominal,
+            ]);
+        } else {
+            Http::withHeaders([
+                'Authorization' => env('FONNTE_TOKEN'),
+            ])->post('https://api.fonnte.com/send', [
+                'target' => env('FONNTE_NUMBER'),
+                'message' => "*PENDAFTAR EXPASIGN BARU*\n\nNama: {$registrant->name}\nPhone: {$registrant->phone}\nEmail: {$registrant->email}\nNIM: {$registrant->nim}\nSekolah/Universitas: {$registrant->school}\nKategori: {$registrant->category}\nNominal: {$registrant->nominal}\n\nSilahkan buka https://expasign-edutime.site/admin dan verifikasi pembayaran",
+                'countryCode' => '62',
+            ]);
+
+            return redirect()->back()->with('success', 'Pendaftaran berhasil!');
         }
     }
 
-    $baseNominal = match ($validatedData['category']) {
-        'category1' => 1000,
-        'category2' => 2000,
-        'category3' => 3000,
-    };
-
-    if ($validatedData['payment_method'] === 'auto') {
-        do {
-            $kodeUnik = rand(100, 999);
-            $nominalFinal = $baseNominal + $kodeUnik;
-            $sudahAda = Registrant::where('nominal', $nominalFinal)->exists();
-        } while ($sudahAda);
-
-        $validatedData['nominal'] = $nominalFinal;
-        $validatedData['code'] = $kodeUnik;
-    } else {
-        $validatedData['nominal'] = $baseNominal;
-        $validatedData['code'] = null;
-    }
-
-    $registrant = Registrant::create([
-        'name' => $validatedData['name'],
-        'email' => $validatedData['email'],
-        'phone' => $validatedData['phone'],
-        'nim' => $validatedData['nim'],
-        'school' => $validatedData['school'],
-        'category' => $validatedData['category'],
-        'nominal' => $validatedData['nominal'],
-        'code' => $validatedData['code'],
-        'receipt' => $url,
-        'isEdu' => $validatedData['isEdu'],
-    ]);
-
-    if ($validatedData['payment_method'] === 'auto') {
-        return view('saweria', [
-            'id' => $registrant->id,
-            'name' => $registrant->name,
-            'nominal' => $registrant->nominal,
-        ]);
-    } else {
-        Http::withHeaders([
-            'Authorization' => env('FONNTE_TOKEN'),
-        ])->post('https://api.fonnte.com/send', [
-            'target' => env('FONNTE_NUMBER'),
-            'message' => "*PENDAFTAR EXPASIGN BARU*\n\nNama: {$registrant->name}\nPhone: {$registrant->phone}\nEmail: {$registrant->email}\nNIM: {$registrant->nim}\nSekolah/Universitas: {$registrant->school}\nKategori: {$registrant->category}\nNominal: {$registrant->nominal}\n\nSilahkan buka https://expasign-edutime.site/admin dan verifikasi pembayaran",
-            'countryCode' => '62',
-        ]);
-
-        return redirect()->back()->with('success', 'Pendaftaran berhasil!');
-    }
-}
 
 
     public function handleCallback(Request $request)
