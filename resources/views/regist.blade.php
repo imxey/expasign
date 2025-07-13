@@ -84,10 +84,10 @@
             </div>
 
 
-            <input type="hidden" name="isEdu" value="0">
             <div class="flex gap-2 text-sm">
                 <input type="checkbox" name="isEdu" id="isEdu" value="1" {{ old('isEdu') ? 'checked' : '' }} class="form-checkbox h-5 w-5 p-2 text-blue-500 rounded focus:ring-blue-500">
                 <label for="isEdu" class="text-gray-300 text-sm font-bold">Bersedia hadir pada edutime tanggal 32 Agustus 2069?</label>
+                <input type="hidden" name="isEdu" value="0">
             </div>
 
             <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mt-4">
