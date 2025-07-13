@@ -32,6 +32,7 @@ class Registrant extends Model
         'category',
         'nominal',
         'receipt',
+        'isSubmit',
         'isEdu',
         'isExpa',
         'code',

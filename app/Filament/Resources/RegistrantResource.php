@@ -119,6 +119,9 @@ class RegistrantResource extends Resource
                 Tables\Columns\BooleanColumn::make('isExpa')
                     ->label('Expasign')
                     ->sortable(),
+                Tables\Columns\BooleanColumn::make('isSubmit')
+                    ->label('Submitted')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->sortable()
                     ->label('Status')

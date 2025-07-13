@@ -18,7 +18,7 @@ class Submit extends Controller
     public function handleSubmission(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|string|email|max:255|exists:registrants,email|unique:submissions,email',
+            'email' => 'required|string|email|max:255|exists:registrants,email',
             'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:120000',
         ]);
         $file = $request->file('file');
@@ -33,11 +33,12 @@ class Submit extends Controller
         }
 
         $id = Registrant::where('email', $validatedData['email'])->first()->id ?? null;
-        if(Registrant::where('id', $id)->first()->status === 'verified'){
+        if(Registrant::where('id', $id)->first()->status === 'verified' && Registrant::where('id', $id)->first()->isSubmit === false) {
             Submission::create([
                 'registrant_id' => $id,
                 'file' => $url,
             ]);
+            Registrant::where('id', $id)->update(['isSubmit' => true]);
             return redirect()->route('submit.index')->with('success', 'Submission berhasil dikirim!');
         }else {
             return redirect()->back()->withErrors(['email' => 'Akun Belum Diverifikasi']);
