@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Regist;
 use App\Http\Controllers\File; 
+use App\Http\Controllers\Submit;
 
 Route::get('/upload', [File::class, 'showUploadForm'])->name('show.form');
 Route::post('/upload', [File::class, 'handleUpload'])->name('file.upload');
@@ -12,11 +13,14 @@ Route::get('/', function () {
 });
 Route::get('/register', [Regist::class, 'index'])->name('regist');
 Route::post('/register', [Regist::class, 'handleRegist'])->name('regist.handle');
+Route::get('/submission', [Submit::class, 'index'])->name('submit.index');
+Route::post('/submission', [Submit::class, 'handleSubmission'])->name('submit.handle');
 
 Route::get('/sitemap.xml', function () {
     $urls = [
         secure_url('/'),
         secure_url('/regist'),
+        secure_url('/submit'),
         // Tambahin semua route kamu di sini
     ];
 

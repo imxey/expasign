@@ -20,24 +20,11 @@ class SubmissionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema(
-                [
-                //
-                Forms\Components\TextInput::make('registrant_id')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('file')
-                    ->disk('s3')
-                    ->directory('submissions')
-                    ->required()
-                    ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png'])
-                    ->maxSize(2048)
-                ]
-            );
-    }
+    public static function canCreate(): bool
+{
+    return false;
+}
+    
 
     public static function table(Table $table): Table
     {
@@ -75,11 +62,6 @@ class SubmissionResource extends Resource
             )
             ->filters(
                 [
-                ]
-            )
-            ->actions(
-                [
-                Tables\Actions\EditAction::make(),
                 ]
             )
             ->bulkActions(
