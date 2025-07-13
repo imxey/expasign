@@ -18,7 +18,7 @@ class Submit extends Controller
     public function handleSubmission(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|string|email|max:255|exists:registrants,email',
+            'email' => 'required|string|email|max:255|exists:registrants,email|unique:submissions,email',
             'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:120000',
         ]);
         $file = $request->file('file');
