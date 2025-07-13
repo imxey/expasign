@@ -37,18 +37,13 @@
                     <input type="email" name="email" id="email" placeholder="Input Email" value="{{ old('email') }}" required class="form-input w-full bg-gray-700 text-sm border border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white px-4 py-2 rounded-md">
                 </div>
             </div>
-            <div>
-                <label for="nim" class="block text-gray-300 text-sm font-bold mb-2">NIM (Nomor Induk Mahasiswa)</label>
-                <input type="number" name="nim" id="nim" placeholder="Input NIM Anda" value="{{ old('nim') }}" required class="form-input w-full bg-gray-700 text-sm border border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white px-4 py-2 rounded-md">
-            </div>
-
             <div class="" id="paymentDetails">
                 <label for="receipt" class="block text-gray-300 text-sm font-bold mb-2">Upload Bukti Pembayaran</label>
                 <input type="file" name="file" id="receipt" required class="form-input w-full bg-gray-700 text-sm border border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white p-2 rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600">
                 <p class="text-gray-400 text-xs mt-1">Ukuran maksimal file: 2MB. Format: JPG, PNG, PDF.</p>
             </div>
             <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mt-4">
-                Daftar Sekarang
+                Submit
             </button>
         </form>
     </div>
