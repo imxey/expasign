@@ -33,14 +33,17 @@ class Submit extends Controller
         }
 
         $id = Registrant::where('email', $validatedData['email'])->first()->id ?? null;
-        if(Registrant::where('id', $id)->first()->status === 'verified' && Registrant::where('id', $id)->first()->isSubmit === false) {
+        if (Registrant::where('id', $id)->first()->status === 'verified') {
+            if (Registrant::where('id', $id)->first()->isSubmit) {
+                return redirect()->back()->withErrors(['email' => 'You have already submitted your file.']);
+            }
             Submission::create([
                 'registrant_id' => $id,
                 'file' => $url,
             ]);
             Registrant::where('id', $id)->update(['isSubmit' => true]);
             return redirect()->route('submit.index')->with('success', 'Submission berhasil dikirim!');
-        }else {
+        } else {
             return redirect()->back()->withErrors(['email' => 'Akun Belum Diverifikasi']);
         }
     }
