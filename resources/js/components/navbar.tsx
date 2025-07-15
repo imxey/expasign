@@ -41,8 +41,8 @@ export default function Navbar() {
                 <Link href="#competitions" className="block text-gray-300 transition-colors duration-300 hover:text-white">
                     Competitions
                 </Link>
-                <Link href="#contact" className="block text-gray-300 transition-colors duration-300 hover:text-white">
-                    Contact
+                <Link href="/edutime" className="block text-gray-300 transition-colors duration-300 hover:text-white">
+                    Edutime
                 </Link>
                 <Link href="/register">
                     <button className="w-full transform rounded-full bg-cyan-500 px-6 py-2 text-white transition-all duration-300 hover:scale-105 hover:bg-cyan-600">
