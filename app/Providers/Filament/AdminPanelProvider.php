@@ -27,27 +27,20 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->colors(
-                [
+            ->colors([
                 'primary' => Color::Amber,
-                ]
-            )
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages(
-                [
+            ->pages([
                 Pages\Dashboard::class,
-                ]
-            )
+            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets(
-                [
+            ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-                ]
-            )
-            ->middleware(
-                [
+            ])
+            ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -57,12 +50,9 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                ]
-            )
-            ->authMiddleware(
-                [
+            ])
+            ->authMiddleware([
                 Authenticate::class,
-                ]
-            );
+            ]);
     }
 }

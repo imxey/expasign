@@ -1,47 +1,34 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Regist;
-use App\Http\Controllers\File; 
-use App\Http\Controllers\Edutime;
 use App\Http\Controllers\Submit;
-
-Route::get('/upload', [File::class, 'showUploadForm'])->name('show.form');
-Route::post('/upload', [File::class, 'handleUpload'])->name('file.upload');
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Test;
+use Inertia\Inertia;
+use App\Http\Controllers\Regist;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Edutime;
 
 Route::get('/', function () {
-    return view('home');
+    return Inertia::render('welcome');
+})->name('home');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
 });
+Route::get('/test', [Test::class, 'index'])
+    ->name('test.index');
 Route::get('/register', [Regist::class, 'index'])->name('regist');
-Route::post('/register', [Regist::class, 'handleRegist'])->name('regist.handle');
+Route::get('/payment', function (Request $request) {
+    return Inertia::render('Regist/saweria', [
+        'id' => $request->input('id'),
+        'name' => $request->input('name'),
+        'nominal' => $request->input('nominal'),
+    ]);
+})->name('payment');
 Route::get('/submission', [Submit::class, 'index'])->name('submit.index');
-Route::post('/submission', [Submit::class, 'handleSubmission'])->name('submit.handle');
-Route::get('/edutime', [Edutime::class, 'index'])->name('edutime.index');
-Route::post('/edutime', [Edutime::class, 'handleEdutime'])->name('edutime.handle');
-
-Route::get('/sitemap.xml', function () {
-    $urls = [
-        secure_url('/'),
-        secure_url('/regist'),
-        secure_url('/submit'),
-        secure_url('/edutime'),
-        // Tambahin semua route kamu di sini
-    ];
-
-    $xml = '<?xml version="1.0" encoding="UTF-8"?>';
-    $xml .= '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">';
-
-    foreach ($urls as $url) {
-        $xml .= '<url>';
-        $xml .= '<loc>' . htmlentities($url) . '</loc>';
-        $xml .= '<lastmod>' . now()->toAtomString() . '</lastmod>';
-        $xml .= '<changefreq>weekly</changefreq>';
-        $xml .= '<priority>0.8</priority>';
-        $xml .= '</url>';
-    }
-
-    $xml .= '</urlset>';
-
-    return response($xml, 200)
-        ->header('Content-Type', 'application/xml');
-});
+Route::get('/edutime', function () {
+    return Inertia::render('Edutime');
+})->name('edutime');
+require __DIR__.'/settings.php';

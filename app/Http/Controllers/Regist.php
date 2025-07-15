@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Inertia\Inertia;
 
 
 class Regist extends Controller
@@ -14,7 +15,7 @@ class Regist extends Controller
     //
     public function index()
     {
-        return view('regist');
+        return Inertia::render('Regist/index');
     }
     public function handleRegist(Request $request)
     {
@@ -26,11 +27,10 @@ class Regist extends Controller
             'school' => 'required|string|max:255',
             'category' => 'required|in:category1,category2,category3',
             'payment_method' => 'required|in:auto,transfer',
-            'isEdu' => 'nullable|boolean', // cukup ini
+            'isEdu' => 'nullable|boolean', 
             'receipt' => 'required_if:payment_method,transfer|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
-
-        $validatedData['isEdu'] = $request->boolean('isEdu'); // hasilnya selalu true/false (1/0)
+        $validatedData['isEdu'] = $request->boolean('isEdu'); 
 
         $url = null;
 
@@ -42,7 +42,7 @@ class Regist extends Controller
                 Storage::disk('s3')->put($fileName, file_get_contents($file));
                 $url = Storage::disk('s3')->url($fileName);
             } catch (\Exception $e) {
-                return back()->withErrors(['receipt' => 'Upload gagal: ' . $e->getMessage()]);
+                return response()->json(['receipt' => 'Upload gagal: ' . $e->getMessage()]);
             }
         }
 
@@ -76,14 +76,13 @@ class Regist extends Controller
             'nominal' => $validatedData['nominal'],
             'code' => $validatedData['code'],
             'receipt' => $url,
-            'isEdu' => $validatedData['isEdu'], // hasilnya udah 1/0
+            'isEdu' => $validatedData['isEdu'], 
         ]);
 
         if ($validatedData['payment_method'] === 'auto') {
-            return view('saweria', [
-                'id' => $registrant->id,
-                'name' => $registrant->name,
-                'nominal' => $registrant->nominal,
+            return response()->json([
+                'success' => 'Pendaftaran berhasil!',
+                'redirect' => '/payment?id=' . $registrant->id . '&name=' . urlencode($registrant->name) . '&nominal=' . $registrant->nominal,
             ]);
         } else {
             Http::withHeaders([
@@ -93,12 +92,9 @@ class Regist extends Controller
                 'message' => "*PENDAFTAR EXPASIGN BARU*\n\nNama: {$registrant->name}\nPhone: {$registrant->phone}\nEmail: {$registrant->email}\nNIM: {$registrant->nim}\nSekolah/Universitas: {$registrant->school}\nKategori: {$registrant->category}\nNominal: {$registrant->nominal}\n\nSilahkan buka https://expasign-edutime.site/admin dan verifikasi pembayaran",
                 'countryCode' => '62',
             ]);
-
-            return redirect()->back()->with('success', 'Pendaftaran berhasil!');
+            return response()->json(['success' => 'Pendaftaran berhasil!']);
         }
     }
-
-
 
     public function handleCallback(Request $request)
     {
