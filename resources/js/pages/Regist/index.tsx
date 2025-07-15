@@ -90,7 +90,9 @@ export default function Regist() {
             const data = await response.json();
             console.log('Response data:', data);
             setSuccessMessage(data.success || 'Pendaftaran berhasil!');
-            window.location.href = data.redirect;
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
         } catch (error) {
             setErrors(['Terjadi kesalahan saat mengirim data. Silakan coba lagi.', error.message]);
             console.error('Error:', error);
