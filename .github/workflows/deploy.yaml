@@ -26,7 +26,5 @@ jobs:
         ssh -o StrictHostKeyChecking=no -p 33310 root@38.46.220.50 << 'EOF'
           cd /home/expasign
           git pull 
-          npm install
-          npm run build
           docker compose up --build -d
         EOF
