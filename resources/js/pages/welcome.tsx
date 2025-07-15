@@ -1,5 +1,6 @@
 import CompeHome from '@/components/compe-home';
 import Navbar from '@/components/navbar';
+import { Link } from '@inertiajs/react';
 import { useEffect } from 'react';
 export default function Welcome() {
     useEffect(() => {
@@ -92,10 +93,11 @@ export default function Welcome() {
                             visi UKM Mars Project, menggabungkan aspek teoritis dan praktis, serta memberikan dampak yang lebih luas dalam
                             pengembangan diri, kreativitas, dan kolaborasi antar mahasiswa.
                         </p>
-
-                        <button className="mb-5 transform rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-600 hover:to-purple-700 hover:shadow-xl">
-                            Register Now
-                        </button>
+                        <Link href="/register">
+                            <button className="mb-5 transform rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-600 hover:to-purple-700 hover:shadow-xl">
+                                Register Now
+                            </button>
+                        </Link>
                     </div>
 
                     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
@@ -108,9 +110,8 @@ export default function Welcome() {
                     <div className="mx-auto max-w-7xl">
                         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                             <CompeHome {...compData[0]} />
-                            <CompeHome {...compData[1]}/>
-                            <CompeHome {...compData[2]}/>
-
+                            <CompeHome {...compData[1]} />
+                            <CompeHome {...compData[2]} />
                         </div>
                     </div>
                 </section>
@@ -155,7 +156,6 @@ export default function Welcome() {
                     </div>
                 </footer>
             </div>
-            
         </>
     );
 }

@@ -161,7 +161,7 @@ export default function Regist() {
                 style={{ fontFamily: "'Orbitron', monospace", fontWeight: 400 }}
             >
                 <div className="relative z-10 w-11/12 max-w-2xl rounded-lg border border-gray-700 bg-gray-800 p-8 shadow-2xl md:p-12">
-                    <h2 className="mb-8 text-center text-3xl font-bold text-blue-400 md:text-4xl">Daftar Expasign x Edutime 2025</h2>
+                    <h2 className="mb-8 text-center text-3xl font-bold text-blue-400 md:text-4xl">Pendaftaran Expasign x Edutime 2025</h2>
 
                     {/* Success message */}
                     {successMessage && <div className="mb-6 rounded-lg bg-green-500 px-4 py-3 text-center text-white">{successMessage}</div>}
