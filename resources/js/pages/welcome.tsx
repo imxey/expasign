@@ -87,7 +87,7 @@ export default function Welcome() {
                         </h1>
 
                         <p className="mx-auto mb-5 max-w-5xl text-xs leading-relaxed text-gray-300 md:text-xl">
-                            Expasign dan Edutime adalah program unggulan dari Mars Project PNJ yang bertujuan meningkatkan kreativitas, inovasi, dan
+                            Expasign dan Edutime adalah program unggulan dari UKM Mars Project PNJ yang bertujuan meningkatkan kreativitas, inovasi, dan
                             potensi mahasiswa. Expasign melibatkan lomba seperti LKTI, Esai, dan Desain Poster, sementara Edutime adalah seminar untuk
                             pengembangan keterampilan di bidang pendidikan dan bisnis. Tahun ini, kedua program ini digabungkan untuk mengoptimalkan
                             visi UKM Mars Project, menggabungkan aspek teoritis dan praktis, serta memberikan dampak yang lebih luas dalam
