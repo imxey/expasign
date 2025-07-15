@@ -31,7 +31,7 @@
                 background-color: oklch(0.145 0 0);
             }
         </style>
-
+        <link rel="icon" href="{{ asset('logo.jpg') }}" type="image/png">
         <title inertia>Expasign x Edutime</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
