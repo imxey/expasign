@@ -1,6 +1,61 @@
 import CompeHome from '@/components/compe-home';
 import Navbar from '@/components/navbar';
+import { useEffect } from 'react';
 export default function Welcome() {
+    useEffect(() => {
+        const anchorElements: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('a[href^="#"]');
+        const clickHandlers: { anchor: HTMLAnchorElement, handler: (e: Event) => void }[] = [];
+        
+        anchorElements.forEach(anchor => {
+            const handler = function(e: Event) {
+                e.preventDefault();
+                const href = anchor.getAttribute('href');
+                if (href) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            };
+            
+            anchor.addEventListener('click', handler);
+            clickHandlers.push({ anchor, handler });
+        });
+
+        const handleScroll = () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.absolute.inset-0') as HTMLElement;
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('nav-links');
+        if (burger && navLinks) {
+            const burgerClickHandler = () => {
+                navLinks.classList.toggle('hidden');
+            };
+            burger.addEventListener('click', burgerClickHandler);
+            
+            return () => {
+                clickHandlers.forEach(({ anchor, handler }) => {
+                    anchor.removeEventListener('click', handler);
+                });
+                window.removeEventListener('scroll', handleScroll);
+                burger.removeEventListener('click', burgerClickHandler);
+            };
+        }
+        
+        return () => {
+            clickHandlers.forEach(({ anchor, handler }) => {
+                anchor.removeEventListener('click', handler);
+            });
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+    
     const compData = [
         {
             name: 'KTI',
@@ -100,6 +155,7 @@ export default function Welcome() {
                     </div>
                 </footer>
             </div>
+            
         </>
     );
 }
