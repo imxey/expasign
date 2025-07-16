@@ -15,7 +15,6 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
-
     - name: Setup SSH agent
       uses: webfactory/ssh-agent@v0.9.0
       with:
@@ -24,10 +23,12 @@ jobs:
     - name: Deploy
       run: |
         ssh -o StrictHostKeyChecking=no -p 33310 root@38.46.220.50 << 'EOF'
+          set -e
+          export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
           cd /home/expasign
-          git pull
+          git fetch origin
+          git reset --hard origin/main
+          npm install
           npm run build
-          chown -R www-data:www-data .
           docker compose up -d --force-recreate app
-          docker compose up --build -d
         EOF
