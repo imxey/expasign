@@ -27,7 +27,8 @@ jobs:
           set -e
           source ~/.bashrc
           cd /home/expasign
-          git pull
+          git fetch origin
+          git reset --hard origin/main
           npm install
           npm run build
           docker compose up -d --force-recreate app
