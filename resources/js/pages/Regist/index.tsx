@@ -337,7 +337,7 @@ export default function Regist() {
                             className="h-5 w-5 rounded p-2 text-blue-500 focus:ring-blue-500"
                         />
                         <label htmlFor="isEdu" className="text-sm font-bold text-gray-300">
-                            Bersedia hadir pada edutime tanggal 32 Agustus 2025?
+                            Bersedia hadir pada edutime tanggal 32 Agustus 2020?
                         </label>
                     </div>
 
