@@ -182,7 +182,6 @@ export default function Edutime() {
                                 name="nim"
                                 id="nim"
                                 placeholder="Input NIM"
-                                value={formData.nim}
                                 onChange={(e) => setFormData({ ...formData, nim: e.target.value })}
                                 required
                                 className="form-input w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
