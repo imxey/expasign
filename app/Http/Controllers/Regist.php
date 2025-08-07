@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 
 class Regist extends Controller
@@ -19,19 +20,31 @@ class Regist extends Controller
     }
     public function handleRegist(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:registrants',
-            'phone' => 'required|numeric',
-            'nim' => 'required|numeric',
-            'school' => 'required|string|max:255',
-            'category' => 'required|in:category1,category2,category3',
-            'payment_method' => 'required|in:auto,transfer',
-            'isEdu' => 'nullable|boolean', 
-            'receipt' => 'required_if:payment_method,transfer|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
-        $validatedData['isEdu'] = $request->boolean('isEdu'); 
+        if (Carbon::now()->lt(Carbon::parse('2025-08-18 00:00:01'))) {
+            return response()->json(['message' => 'Pendaftaran belum dibuka'], 422);
+        }
 
+        if (Carbon::now()->gt(Carbon::parse('2025-08-28 23:59:59'))) {
+            return response()->json(['message' => 'Pendaftaran sudah ditutup'], 422);
+        }
+
+        try{
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:registrants',
+                'phone' => 'required|numeric',
+                'nim' => 'required|numeric',
+                'school' => 'required|string|max:255',
+                'category' => 'required|in:category1,category2,category3',
+                'payment_method' => 'required|in:auto,transfer',
+                'isEdu' => 'nullable|boolean', 
+                'receipt' => 'required_if:payment_method,transfer|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            ]);
+            $validatedData['isEdu'] = $request->boolean('isEdu'); 
+        }catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['status' => 'error', 'message' => $e->errors()], 422);
+        }
+        
         $url = null;
 
         if ($request->payment_method === 'transfer') {
