@@ -25,5 +25,4 @@ yarn-error.log
 docker-compose.yaml
 Dockerfile
 php-config.ini
-artisan
 frankenphp
