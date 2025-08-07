@@ -63,7 +63,7 @@ export default function Welcome() {
             detail: 'lorem ipsum',
         },
         {
-            name: 'Essay',
+            name: 'Business Plan',
             detail: 'lorem ipsum',
         },
         {
