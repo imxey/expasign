@@ -127,7 +127,6 @@ class Regist extends Controller
             'chatId' => env('WA_NUMBER'),
             'message' => "*PENDAFTAR EXPASIGN BARU (OTOMATIS)*\n\nNama: {$db->name}\nPhone: {$db->phone}\nEmail: {$db->email}\nNIM: {$db->nim}\nSekolah/Universitas: {$db->school}\nKategori: {$db->category}\nNominal: {$db->nominal}\nstatus: {$db->status}\n",
         ]);
-
         return response()->json(['message' => 'Callback berhasil diproses']);
     }
 
