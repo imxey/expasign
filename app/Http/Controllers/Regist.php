@@ -87,7 +87,7 @@ class Regist extends Controller
         } else {
             Http::withHeaders([
                 'api_key' => env('API_KEY'),
-            ])->post(' https://api.expasign-edutime.site/send', [
+            ])->post('https://api.expasign-edutime.site/send', [
                 'chatId' => env('WA_NUMBER'),
                 'message' => "*PENDAFTAR EXPASIGN BARU*\n\nNama: {$registrant->name}\nPhone: {$registrant->phone}\nEmail: {$registrant->email}\nNIM: {$registrant->nim}\nSekolah/Universitas: {$registrant->school}\nKategori: {$registrant->category}\nNominal: {$registrant->nominal}\n\nSilahkan buka https://expasign-edutime.site/admin dan verifikasi pembayaran",
             ]);
@@ -123,7 +123,7 @@ class Regist extends Controller
 
         $response = Http::withHeaders([
             'api_key' => env('API_KEY'),
-        ])->post(' https://api.expasign-edutime.site/send', [
+        ])->post('https://api.expasign-edutime.site/send', [
             'chatId' => env('WA_NUMBER'),
             'message' => "*PENDAFTAR EXPASIGN BARU (OTOMATIS)*\n\nNama: {$db->name}\nPhone: {$db->phone}\nEmail: {$db->email}\nNIM: {$db->nim}\nSekolah/Universitas: {$db->school}\nKategori: {$db->category}\nNominal: {$db->nominal}\nstatus: {$db->status}\n",
         ]);
