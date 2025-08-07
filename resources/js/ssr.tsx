@@ -4,7 +4,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import ReactDOMServer from 'react-dom/server';
 import { type RouteName, route } from 'ziggy-js';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Expasign x Eduitime 2025';
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createServer((page) =>
     createInertiaApp({
