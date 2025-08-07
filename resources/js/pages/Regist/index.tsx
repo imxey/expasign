@@ -1,60 +1,60 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Nav from '../../components/navbar';
 
 export default function Regist() {
     useEffect(() => {
-            const anchorElements: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('a[href^="#"]');
-            const clickHandlers: { anchor: HTMLAnchorElement, handler: (e: Event) => void }[] = [];
-            
-            anchorElements.forEach(anchor => {
-                const handler = function(e: Event) {
-                    e.preventDefault();
-                    const href = anchor.getAttribute('href');
-                    if (href) {
-                        const target = document.querySelector(href);
-                        if (target) {
-                            target.scrollIntoView({ behavior: 'smooth' });
-                        }
+        const anchorElements: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('a[href^="#"]');
+        const clickHandlers: { anchor: HTMLAnchorElement; handler: (e: Event) => void }[] = [];
+
+        anchorElements.forEach((anchor) => {
+            const handler = function (e: Event) {
+                e.preventDefault();
+                const href = anchor.getAttribute('href');
+                if (href) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
                     }
-                };
-                
-                anchor.addEventListener('click', handler);
-                clickHandlers.push({ anchor, handler });
-            });
-    
-            const handleScroll = () => {
-                const scrolled = window.pageYOffset;
-                const parallax = document.querySelector('.absolute.inset-0') as HTMLElement;
-                if (parallax) {
-                    parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
                 }
             };
-            window.addEventListener('scroll', handleScroll);
-    
-            const burger = document.getElementById('burger');
-            const navLinks = document.getElementById('nav-links');
-            if (burger && navLinks) {
-                const burgerClickHandler = () => {
-                    navLinks.classList.toggle('hidden');
-                };
-                burger.addEventListener('click', burgerClickHandler);
-                
-                return () => {
-                    clickHandlers.forEach(({ anchor, handler }) => {
-                        anchor.removeEventListener('click', handler);
-                    });
-                    window.removeEventListener('scroll', handleScroll);
-                    burger.removeEventListener('click', burgerClickHandler);
-                };
+
+            anchor.addEventListener('click', handler);
+            clickHandlers.push({ anchor, handler });
+        });
+
+        const handleScroll = () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.absolute.inset-0') as HTMLElement;
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
             }
-            
+        };
+        window.addEventListener('scroll', handleScroll);
+
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('nav-links');
+        if (burger && navLinks) {
+            const burgerClickHandler = () => {
+                navLinks.classList.toggle('hidden');
+            };
+            burger.addEventListener('click', burgerClickHandler);
+
             return () => {
                 clickHandlers.forEach(({ anchor, handler }) => {
                     anchor.removeEventListener('click', handler);
                 });
                 window.removeEventListener('scroll', handleScroll);
+                burger.removeEventListener('click', burgerClickHandler);
             };
-        }, []);
+        }
+
+        return () => {
+            clickHandlers.forEach(({ anchor, handler }) => {
+                anchor.removeEventListener('click', handler);
+            });
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -135,13 +135,30 @@ export default function Regist() {
             });
             if (!response.ok) {
                 const errorData = await response.json();
-                setErrors(errorData.errors || ['Terjadi kesalahan saat mengirim data. Silakan coba lagi.']);
-                console.error('Error response:', errorData);
+                const messages = [];
+
+                if (errorData.message && typeof errorData.message === 'object') {
+                    for (const key in errorData.message) {
+                        const arr = errorData.message[key];
+                        if (Array.isArray(arr) && arr.length > 0) {
+                            messages.push(arr[0]); // cuma ambil yang pertama
+                        }
+                    }
+                } else if (typeof errorData.message === 'string') {
+                    messages.push(errorData.message);
+                } else {
+                    messages.push('Terjadi kesalahan saat mengirim data.');
+                }
+
+                setErrors(messages);
+                console.error('Error message:', errorData.message);
                 setIsLoading(false);
                 return;
             }
+
             const data = await response.json();
             console.log('Response data:', data);
+            // if(data.)
             setSuccessMessage(data.success || 'Pendaftaran berhasil!');
             if (data.redirect) {
                 window.location.href = data.redirect;
@@ -155,7 +172,7 @@ export default function Regist() {
 
     return (
         <>
-        <Nav/>
+            <Nav />
             <div
                 className="flex min-h-screen items-center justify-center bg-gray-900 py-12 text-white"
                 style={{ fontFamily: "'Orbitron', monospace", fontWeight: 400 }}
@@ -269,12 +286,12 @@ export default function Regist() {
                         >
                             <option value="">Pilih kategori lomba</option>
                             <option value="category1">LKTI</option>
-                            <option value="category2">Esai</option>
+                            <option value="category2">Business Plan</option>
                             <option value="category3">Desain Poster</option>
                         </select>
                     </div>
 
-                    <div className='mb-5 mt-5'>
+                    <div className="mt-5 mb-5">
                         <p className="mb-3 block text-sm font-bold text-gray-300">METODE PEMBAYARAN</p>
                         <div className="flex flex-col gap-4 md:flex-row">
                             <div className="flex items-center gap-2">
