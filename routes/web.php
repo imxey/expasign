@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Test;
 use Inertia\Inertia;
 use App\Http\Controllers\Regist;
+use App\Http\Controllers\TeamRegistrationController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Edutime;
 
@@ -19,7 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 Route::get('/test', [Test::class, 'index'])
     ->name('test.index');
-Route::get('/register', [Regist::class, 'index'])->name('regist');
+Route::get('/register', [TeamRegistrationController::class, 'index'])->name('regist');
 Route::get('/payment', function (Request $request) {
     return Inertia::render('Regist/saweria', [
         'id' => $request->input('id'),

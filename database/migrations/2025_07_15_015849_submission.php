@@ -14,10 +14,10 @@ return new class extends Migration
         //
         Schema::create('submission', function (Blueprint $table) {
             $table->uuid('id')->primary(); 
-            $table->uuid('registrant_id'); 
+            $table->uuid('team_id'); 
             $table->string('file'); 
             $table->timestamps();
-            $table->foreign('registrant_id')->references('id')->on('registrants')->onDelete('cascade');
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
             });
     }
 
