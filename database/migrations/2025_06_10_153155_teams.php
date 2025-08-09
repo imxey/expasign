@@ -6,22 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        //
-        Schema::create('registrants', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone');
-            $table->string('school');
-            $table->string('nim');
-            $table->string('category');
-            $table->integer('nominal');
-            $table->string('receipt')->nullable();
+            $table->string('team_name');
+            $table->string('category')->nullable();
+            $table->integer('nominal')->nullable();
+            $table->string('receipt_path')->nullable();
             $table->boolean('isExpa')->default(true);
             $table->boolean('isEdu');
             $table->boolean('isSubmit')->default(false);
@@ -31,12 +23,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        //
-        Schema::dropIfExists('registrants');
+        Schema::dropIfExists('teams');
     }
 };
