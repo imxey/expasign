@@ -50,7 +50,7 @@ class TeamRegistrationController extends Controller
     public function handleRegistration(Request $request)
     {
         // 1. Cek periode pendaftaran
-        if (Carbon::now()->lt(Carbon::parse('2025-08-05 00:00:01'))) {
+        if (Carbon::now()->lt(Carbon::parse('2025-08-18 00:00:01'))) {
             return response()->json(['message' => 'Pendaftaran belum dibuka'], 422);
         }
 
